@@ -22,8 +22,8 @@ const manifestCache = new Map<string, ManifestCache>()
 const delimiterPairs: Record<string, string> = {
 	'"': '"',
 	"'": "'",
-	'`': '`',
 	'<': '>',
+	'`': '`',
 }
 
 /**
@@ -33,10 +33,11 @@ const delimiterPairs: Record<string, string> = {
 function findAphexUrlAtPosition(
 	line: string,
 	character: number,
-): { url: string; start: number; end: number } | undefined {
+): undefined | { end: number; start: number; url: string } {
 	const aphexMarker = '~aphex/'
 	let searchIndex = 0
 
+	// eslint-disable-next-line ts/no-unnecessary-condition
 	while (true) {
 		const startOfAphex = line.indexOf(aphexMarker, searchIndex)
 		if (startOfAphex === -1) break
@@ -53,17 +54,18 @@ function findAphexUrlAtPosition(
 			if (endIndex === -1) endIndex = line.length
 		} else {
 			// No delimiter - stop at whitespace or common terminators
-			const remaining = line.substring(startOfAphex)
-			const match = remaining.match(/[\s"'`()[\]<>]/)
-			endIndex = match?.index !== undefined ? startOfAphex + match.index : line.length
+			const remaining = line.slice(Math.max(0, startOfAphex))
+			const match = /[\s"'`()[\]<>]/.exec(remaining)
+			endIndex = match?.index === undefined ? line.length : startOfAphex + match.index
 		}
 
 		// Check if cursor is within this URL
 		if (character >= startOfAphex && character <= endIndex) {
 			return {
-				url: line.substring(startOfAphex, endIndex),
-				start: startOfAphex,
 				end: endIndex,
+				start: startOfAphex,
+				// eslint-disable-next-line unicorn/prefer-string-slice
+				url: line.substring(startOfAphex, endIndex),
 			}
 		}
 

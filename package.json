@@ -42,8 +42,8 @@
 	"scripts": {
 		"build": "tsc -p ./tsconfig.build.json",
 		"clean": "git rm -f pnpm-lock.yaml ; git clean -fdX",
-		"fix": "kpi fix",
-		"lint": "kpi lint",
+		"fix": "ksc fix",
+		"lint": "ksc lint",
 		"pack": "pnpm run build && vsce package --no-dependencies",
 		"release": "bumpp --commit 'Release: %s' && pnpm run build && vsce publish --no-dependencies --no-update-package-json --no-git-tag-version --pat $(op read 'op://Personal/Azure VS Code/credential')",
 		"pretest": "pnpm run build && tsc -p ./tsconfig.test.json",
@@ -79,17 +79,17 @@
 		"onLanguage:typescriptreact"
 	],
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^5.11.0",
+		"@kitschpatrol/shared-config": "^6.0.3",
 		"@types/mocha": "^10.0.10",
-		"@types/node": "~22.19.3",
+		"@types/node": "~22.19.15",
 		"@types/vscode": "1.105.0",
 		"@vscode/test-electron": "^2.5.2",
 		"@vscode/vsce": "^3.7.1",
-		"bumpp": "^10.3.2",
+		"bumpp": "^11.0.1",
 		"mocha": "^11.7.5",
 		"typescript": "~5.9.3"
 	},
-	"packageManager": "pnpm@10.26.2",
+	"packageManager": "pnpm@10.32.1",
 	"engines": {
 		"node": ">=22.19.0",
 		"vscode": "^1.105.0"
