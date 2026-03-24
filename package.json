@@ -1,6 +1,6 @@
 {
-	"name": "aphex",
-	"displayName": "Aphex",
+	"name": "aphex-preview",
+	"displayName": "Aphex Preview",
 	"version": "0.0.0",
 	"private": true,
 	"description": "Thumbnail preview images on hover for @kitschpatrol/unplugin-aphex URLs.",
@@ -17,13 +17,13 @@
 		"photokit",
 		"photos"
 	],
-	"homepage": "https://github.com/kitschpatrol/vscode-aphex#readme",
+	"homepage": "https://github.com/kitschpatrol/vscode-aphex-preview#readme",
 	"bugs": {
-		"url": "https://github.com/kitschpatrol/vscode-aphex/issues"
+		"url": "https://github.com/kitschpatrol/vscode-aphex-preview/issues"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/kitschpatrol/vscode-aphex.git"
+		"url": "git+https://github.com/kitschpatrol/vscode-aphex-preview.git"
 	},
 	"license": "MIT",
 	"author": {
@@ -52,14 +52,14 @@
 	},
 	"contributes": {
 		"configuration": {
-			"title": "Aphex",
+			"title": "Aphex Preview",
 			"properties": {
-				"aphex.manifestPath": {
+				"aphex-preview.manifestPath": {
 					"type": "string",
 					"default": "node_modules/.cache/aphex/.aphex-plugin-cache.json",
 					"description": "Path to the aphex cache manifest file (relative to workspace root)"
 				},
-				"aphex.previewMaxWidth": {
+				"aphex-preview.maxWidth": {
 					"type": "number",
 					"default": 300,
 					"description": "Maximum width in logical points for image previews"
@@ -79,7 +79,7 @@
 		"onLanguage:typescriptreact"
 	],
 	"devDependencies": {
-		"@kitschpatrol/shared-config": "^6.0.3",
+		"@kitschpatrol/shared-config": "^6.1.0",
 		"@types/mocha": "^10.0.10",
 		"@types/node": "~22.19.15",
 		"@types/vscode": "1.105.0",
@@ -89,7 +89,7 @@
 		"mocha": "^11.7.5",
 		"typescript": "~5.9.3"
 	},
-	"packageManager": "pnpm@10.32.1",
+	"packageManager": "pnpm@10.33.0",
 	"engines": {
 		"node": ">=22.19.0",
 		"vscode": "^1.105.0"

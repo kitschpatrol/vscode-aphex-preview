@@ -103,7 +103,7 @@ function getManifestPath(document: vscode.TextDocument): string | undefined {
 		return undefined
 	}
 
-	const config = vscode.workspace.getConfiguration('aphex')
+	const config = vscode.workspace.getConfiguration('aphex-preview')
 	const configuredPath = config.get<string>(
 		'manifestPath',
 		'node_modules/.cache/aphex/.aphex-plugin-cache.json',
@@ -121,8 +121,8 @@ function createHoverContent(
 	manifest: Manifest,
 	workspaceRoot: string,
 ): vscode.MarkdownString {
-	const config = vscode.workspace.getConfiguration('aphex')
-	const maxWidth = config.get<number>('previewMaxWidth', 300)
+	const config = vscode.workspace.getConfiguration('aphex-preview')
+	const maxWidth = config.get<number>('maxWidth', 300)
 
 	const entry = manifest[url]
 

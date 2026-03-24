@@ -13,7 +13,7 @@ suite('Aphex Hover Provider', () => {
 
 	suiteSetup(async () => {
 		// Wait for extension to activate
-		const extension = vscode.extensions.getExtension('kitschpatrol.aphex')
+		const extension = vscode.extensions.getExtension('kitschpatrol.aphex-preview')
 		if (extension && !extension.isActive) {
 			await extension.activate()
 		}

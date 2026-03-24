@@ -2,7 +2,7 @@
 
 <!-- title { titleCase: true, prefix: "VS Code ", postfix: " Extension" } -->
 
-# VS Code Aphex Extension
+# VS Code Aphex Preview Extension
 
 <!-- /title -->
 
@@ -10,14 +10,14 @@
   npm: [],
   custom: {
     "Visual Studio Marketplace Version": {
-      image: "https://img.shields.io/visual-studio-marketplace/v/kitschpatrol.aphex.svg?color=eee&amp;label=VS%20Code%20Marketplace&logo=visual-studio-code",
-      link: "https://marketplace.visualstudio.com/items?itemName=kitschpatrol.aphex",
+      image: "https://img.shields.io/visual-studio-marketplace/v/kitschpatrol.aphex-preview.svg?color=eee&amp;label=VS%20Code%20Marketplace&logo=visual-studio-code",
+      link: "https://marketplace.visualstudio.com/items?itemName=kitschpatrol.aphex-preview",
     },
   }
 } -->
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/kitschpatrol.aphex.svg?color=eee&label=VS%20Code%20Marketplace&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=kitschpatrol.aphex)
+[![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/kitschpatrol.aphex-preview.svg?color=eee&label=VS%20Code%20Marketplace&logo=visual-studio-code)](https://marketplace.visualstudio.com/items?itemName=kitschpatrol.aphex-preview)
 
 <!-- /badges -->
 
@@ -31,15 +31,15 @@
 
 _Let's assume you have [VS Code](https://code.visualstudio.com/) installed and are working in a project using the [unplugin-aphex](https://github.com/kitschpatrol/unplugin-aphex/) build tool plugin to integrate photos from your local Apple Photos.app library into your build pipeline._
 
-Install the extension from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=kitschpatrol.aphex), or run the following in VS Code's command palette:
+Install the extension from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=kitschpatrol.aphex-preview), or run the following in VS Code's command palette:
 
 ```sh
-ext install kitschpatrol.aphex
+ext install kitschpatrol.aphex-preview
 ```
 
 Now, when you hover over an Aphex-style link in your code, you should see a live preview thumbnail of the referenced photo.
 
-![vscode-aphex banner](assets/screenshot.webp)
+![vscode-aphex-preview banner](assets/screenshot.webp)
 
 For now, this extension does not itself resolve or fetch images; it only provides thumbnail previews for cached Aphex URLs that have already been resolved by [unplugin-aphex](https://github.com/kitschpatrol/unplugin-aphex/).
 
@@ -47,10 +47,10 @@ For now, this extension does not itself resolve or fetch images; it only provide
 
 The extension provides the following settings:
 
-| Setting                 | Default                                              | Description                               |
-| ----------------------- | ---------------------------------------------------- | ----------------------------------------- |
-| `aphex.manifestPath`    | `node_modules/.cache/aphex/.aphex-plugin-cache.json` | Path to the Aphex cache manifest file     |
-| `aphex.previewMaxWidth` | `300`                                                | Maximum width for image previews (points) |
+| Setting                      | Default                                              | Description                               |
+| ---------------------------- | ---------------------------------------------------- | ----------------------------------------- |
+| `aphex-preview.manifestPath` | `node_modules/.cache/aphex/.aphex-plugin-cache.json` | Path to the Aphex cache manifest file     |
+| `aphex-preview.maxWidth`     | `300`                                                | Maximum width for image previews (points) |
 
 ## Supported file types
 
@@ -64,7 +64,7 @@ Hover previews work in the following file types: MDX, HTML, Markdown, Astro, Sve
 
 ## Contributing
 
-[Issues](https://github.com/kitschpatrol/vscode-aphex/issues) and pull requests are welcome.
+[Issues](https://github.com/kitschpatrol/vscode-aphex-preview/issues) and pull requests are welcome.
 
 <!-- /contributing -->
 

@@ -13,6 +13,7 @@ export default eslintConfig(
 			overrides: {
 				'jsdoc/require-jsdoc': 'off',
 				'ts/no-empty-function': 'off',
+				'ts/no-unnecessary-type-arguments': 'off',
 			},
 		},
 	},
