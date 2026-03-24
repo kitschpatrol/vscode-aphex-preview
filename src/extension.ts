@@ -119,7 +119,7 @@ function getManifestPath(document: vscode.TextDocument): string | undefined {
 function createHoverContent(
 	url: string,
 	manifest: Manifest,
-	workspaceRoot: string,
+	manifestPath: string,
 ): vscode.MarkdownString {
 	const config = vscode.workspace.getConfiguration('aphex-preview')
 	const maxWidth = config.get<number>('maxWidth', 300)
@@ -139,10 +139,9 @@ function createHoverContent(
 		return md
 	}
 
-	// Resolve the cached file path
-	const cachedPath = path.isAbsolute(entry.result)
-		? entry.result
-		: path.join(workspaceRoot, entry.result)
+	// Resolve the cached file path relative to the manifest's directory (the cache directory)
+	const cacheDirectory = path.dirname(manifestPath)
+	const cachedPath = path.join(cacheDirectory, entry.result)
 
 	if (!fs.existsSync(cachedPath)) {
 		// Case 3: URL in manifest but file doesn't exist
@@ -183,14 +182,9 @@ class AphexHoverProvider implements vscode.HoverProvider {
 			return undefined
 		}
 
-		const workspaceFolder = vscode.workspace.getWorkspaceFolder(document.uri)
-		if (!workspaceFolder) {
-			return undefined
-		}
-
 		const range = new vscode.Range(position.line, found.start, position.line, found.end)
 		const manifest = getManifest(manifestPath)
-		const content = createHoverContent(found.url, manifest, workspaceFolder.uri.fsPath)
+		const content = createHoverContent(found.url, manifest, manifestPath)
 
 		return new vscode.Hover(content, range)
 	}
