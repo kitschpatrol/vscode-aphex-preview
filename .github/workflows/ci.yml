@@ -48,4 +48,10 @@ jobs:
         run: pnpm run lint
 
       - name: Test
-        run: pnpm run test
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" = "Linux" ]; then
+            xvfb-run -a pnpm run test
+          else
+            pnpm run test
+          fi
