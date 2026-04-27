@@ -28,7 +28,7 @@
 
 ## Getting started
 
-_Let's assume you have [VS Code](https://code.visualstudio.com) installed and are working in a project using the [unplugin-aphex](https://github.com/kitschpatrol/unplugin-aphex) build tool plugin to integrate photos from your local Apple Photos.app library into your build pipeline._
+_Let's assume you have [VS Code](https://code.visualstudio.com) installed and are working in a project using the [unplugin-aphex](https://github.com/kitschpatrol/unplugin-aphex) build tool plugin to integrate photos from your local Apple Photos.app library into your build pipeline via the [Aphex](https://github.com/kitschpatrol/aphex) project._
 
 Install the extension from the [Marketplace](https://marketplace.visualstudio.com/items?itemName=kitschpatrol.aphex-preview), or run the following in VS Code's command palette:
 
@@ -40,7 +40,9 @@ Now, when you hover over an Aphex-style link in your code, you should see a live
 
 ![vscode-aphex-preview banner](assets/screenshot.webp)
 
-For now, this extension does not itself resolve or fetch images; it only provides thumbnail previews for cached Aphex URLs that have already been resolved by [unplugin-aphex](https://github.com/kitschpatrol/unplugin-aphex) via [aphex](https://github.com/kitschpatrol/aphex).
+For now, this extension does not itself resolve or fetch images; it only provides thumbnail previews for cached Aphex URLs that have already been resolved by [unplugin-aphex](https://github.com/kitschpatrol/unplugin-aphex) via [Aphex](https://github.com/kitschpatrol/aphex).
+
+This plugin will _technically_ function and resolve from an existing image cache on Linux and Windows versions of VS Code, but the underlying Aphex pipeline (and the entire premise of resolving assets from a local Apple Photos.app library) will only work on the macOS platform.
 
 ## Configuration
 
