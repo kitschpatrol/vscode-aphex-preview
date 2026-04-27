@@ -67,7 +67,7 @@
 					"type": "number",
 					"default": 300,
 					"minimum": 1,
-					"maximum": 2000,
+					"maximum": 6016,
 					"description": "Maximum width in logical points for image previews"
 				}
 			}
