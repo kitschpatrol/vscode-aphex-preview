@@ -26,6 +26,9 @@ const delimiterPairs: Record<string, string> = {
 	'`': '`',
 }
 
+const URL_TERMINATOR_REGEX = /[\s"'`()[\]<>]/
+const WHITESPACE_REGEX = /\s/
+
 /**
  * Find an aphex URL at the given position in a line, handling paths with spaces
  * when they're inside quotes or angle brackets.
@@ -40,10 +43,17 @@ function findAphexUrlAtPosition(
 	// eslint-disable-next-line ts/no-unnecessary-condition
 	while (true) {
 		const startOfAphex = line.indexOf(aphexMarker, searchIndex)
-		if (startOfAphex === -1) break
+		if (startOfAphex === -1) {
+			break
+		}
 
-		// Look at the character before ~aphex/ to determine the delimiter
-		const charBefore = startOfAphex > 0 ? line[startOfAphex - 1] : ''
+		// Walk back past any whitespace to find the delimiter that opens the URL
+		let delimiterIndex = startOfAphex - 1
+		while (delimiterIndex >= 0 && WHITESPACE_REGEX.test(line[delimiterIndex] ?? '')) {
+			delimiterIndex--
+		}
+
+		const charBefore = delimiterIndex >= 0 ? (line[delimiterIndex] ?? '') : ''
 		const closingDelimiter = delimiterPairs[charBefore]
 
 		let endIndex: number
@@ -51,11 +61,13 @@ function findAphexUrlAtPosition(
 		if (closingDelimiter) {
 			// Path is inside quotes or angle brackets - find the closing delimiter
 			endIndex = line.indexOf(closingDelimiter, startOfAphex)
-			if (endIndex === -1) endIndex = line.length
+			if (endIndex === -1) {
+				endIndex = line.length
+			}
 		} else {
 			// No delimiter - stop at whitespace or common terminators
-			const remaining = line.slice(Math.max(0, startOfAphex))
-			const match = /[\s"'`()[\]<>]/.exec(remaining)
+			const remaining = line.slice(startOfAphex)
+			const match = URL_TERMINATOR_REGEX.exec(remaining)
 			endIndex = match?.index === undefined ? line.length : startOfAphex + match.index
 		}
 
@@ -135,7 +147,7 @@ function createHoverContent(
 		md.appendMarkdown('### ⚠️ Not in cache\n\n')
 		md.appendMarkdown(`\`${url}\`\n\n`)
 		md.appendMarkdown("This asset hasn't been cached yet.\n\n")
-		md.appendMarkdown('Run `pnpm build` or `vite build` to generate the cache.')
+		md.appendMarkdown('Run your build to generate the cache.')
 		return md
 	}
 
@@ -151,7 +163,7 @@ function createHoverContent(
 		md.appendMarkdown('### ⚠️ Cache file missing\n\n')
 		md.appendMarkdown(`\`${entry.result}\`\n\n`)
 		md.appendMarkdown("The cache manifest references this file, but it doesn't exist.\n\n")
-		md.appendMarkdown('Try running `pnpm build` to regenerate the cache.')
+		md.appendMarkdown('Try re-running your build to regenerate the cache.')
 		return md
 	}
 

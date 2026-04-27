@@ -11,3 +11,5 @@ const inBrackets = ['~aphex/pets/tiny/portrait']
 const inParens = ('~aphex/pets/tiny/portrait')
 
 const withSpaces = '~aphex/projects/album with spaces/building'
+
+const withLeadingSpace = '   ~aphex/pets/tiny/portrait'

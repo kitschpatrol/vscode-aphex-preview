@@ -42,9 +42,11 @@ suite('Aphex Hover Provider', () => {
 				if (typeof content === 'string') {
 					return content
 				}
+
 				if (content instanceof vscode.MarkdownString) {
 					return content.value
 				}
+
 				return ''
 			})
 			.join('\n')
@@ -116,5 +118,14 @@ suite('Aphex Hover Provider', () => {
 		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
 		const text = getHoverText(hovers[0])
 		assert.ok(text.includes('<img'), 'Should contain an img tag for path with spaces')
+	})
+
+	test('detects delimiter through whitespace before ~aphex/', async () => {
+		// Line 14: const withLeadingSpace = '   ~aphex/pets/tiny/portrait'
+		const hovers = await getHoverAt(14, 35)
+
+		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
+		const text = getHoverText(hovers[0])
+		assert.ok(text.includes('<img'), 'Should contain an img tag when quote is not adjacent')
 	})
 })
