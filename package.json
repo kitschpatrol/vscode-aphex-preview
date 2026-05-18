@@ -1,7 +1,7 @@
 {
 	"name": "aphex-preview",
 	"displayName": "Aphex Preview",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"private": true,
 	"description": "Thumbnail preview images on hover for @kitschpatrol/unplugin-aphex URLs.",
 	"categories": [
