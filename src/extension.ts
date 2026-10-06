@@ -26,7 +26,9 @@ const delimiterPairs: Record<string, string> = {
 	'`': '`',
 }
 
+// eslint-disable-next-line require-unicode-regexp -- The ES2022 build target rejects the 'v' flag
 const URL_TERMINATOR_REGEX = /[\s"'`()[\]<>]/
+// eslint-disable-next-line require-unicode-regexp -- The ES2022 build target rejects the 'v' flag
 const WHITESPACE_REGEX = /\s/
 
 /**
@@ -58,17 +60,17 @@ function findAphexUrlAtPosition(
 
 		let endIndex: number
 
-		if (closingDelimiter) {
+		if (closingDelimiter === undefined) {
+			// No delimiter - stop at whitespace or common terminators
+			const remaining = line.slice(startOfAphex)
+			const match = URL_TERMINATOR_REGEX.exec(remaining)
+			endIndex = match?.index === undefined ? line.length : startOfAphex + match.index
+		} else {
 			// Path is inside quotes or angle brackets - find the closing delimiter
 			endIndex = line.indexOf(closingDelimiter, startOfAphex)
 			if (endIndex === -1) {
 				endIndex = line.length
 			}
-		} else {
-			// No delimiter - stop at whitespace or common terminators
-			const remaining = line.slice(startOfAphex)
-			const match = URL_TERMINATOR_REGEX.exec(remaining)
-			endIndex = match?.index === undefined ? line.length : startOfAphex + match.index
 		}
 
 		// Check if cursor is within this URL
@@ -98,7 +100,6 @@ function getManifest(manifestPath: string): Manifest {
 		}
 
 		const content = fs.readFileSync(manifestPath, 'utf8')
-		// eslint-disable-next-line ts/no-unsafe-type-assertion
 		const manifest = JSON.parse(content) as Manifest
 
 		manifestCache.set(manifestPath, { manifest, mtime })
@@ -121,11 +122,9 @@ function getManifestPath(document: vscode.TextDocument): string | undefined {
 		'node_modules/.cache/aphex/.aphex-plugin-cache.json',
 	)
 
-	if (path.isAbsolute(configuredPath)) {
-		return configuredPath
-	}
-
-	return path.join(workspaceFolder.uri.fsPath, configuredPath)
+	return path.isAbsolute(configuredPath)
+		? configuredPath
+		: path.join(workspaceFolder.uri.fsPath, configuredPath)
 }
 
 function createHoverContent(
@@ -138,7 +137,6 @@ function createHoverContent(
 
 	const entry = manifest[url]
 
-	// eslint-disable-next-line ts/no-unnecessary-condition
 	if (!entry) {
 		// Case 2: URL not found in manifest
 		const md = new vscode.MarkdownString()
@@ -190,7 +188,7 @@ class AphexHoverProvider implements vscode.HoverProvider {
 		}
 
 		const manifestPath = getManifestPath(document)
-		if (!manifestPath) {
+		if (manifestPath === undefined) {
 			return undefined
 		}
 

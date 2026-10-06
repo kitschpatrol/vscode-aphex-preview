@@ -4,6 +4,7 @@
 		"lib": ["ES2022"],
 		"rootDir": "src",
 		"module": "Node16",
+		"types": ["node"],
 		"strict": true,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitReturns": true,
@@ -11,7 +12,5 @@
 		"outDir": "dist",
 		"sourceMap": true
 	},
-
-	// Includes project dot-files files for typescript-eslint integration
-	"include": ["src/**/*"]
+	"include": ["src/"]
 }

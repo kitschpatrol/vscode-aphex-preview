@@ -18,6 +18,7 @@ async function main(): Promise<void> {
 	})
 }
 
+// eslint-disable-next-line unicorn/prefer-await -- Compiled to CommonJS, so top-level await is unavailable
 main().catch((error: unknown) => {
 	console.error('Failed to run tests:', error)
 	process.exit(1)

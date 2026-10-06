@@ -1,5 +1,3 @@
-/* eslint-disable unicorn/consistent-function-scoping */
-
 import { suite, suiteSetup, test } from 'mocha'
 import * as assert from 'node:assert'
 import * as path from 'node:path'
@@ -43,11 +41,7 @@ suite('Aphex Hover Provider', () => {
 					return content
 				}
 
-				if (content instanceof vscode.MarkdownString) {
-					return content.value
-				}
-
-				return ''
+				return content instanceof vscode.MarkdownString ? content.value : ''
 			})
 			.join('\n')
 	}
@@ -56,8 +50,9 @@ suite('Aphex Hover Provider', () => {
 		// Line 3: const existingImage = '~aphex/pets/tiny/portrait'
 		const hovers = await getHoverAt(3, 30)
 
-		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
-		const text = getHoverText(hovers[0])
+		const hover = hovers?.[0]
+		assert.ok(hover, 'Should return a hover')
+		const text = getHoverText(hover)
 		assert.ok(text.includes('<img'), 'Should contain an img tag')
 		assert.ok(text.includes('test-image.png'), 'Should show the filename')
 	})
@@ -66,8 +61,9 @@ suite('Aphex Hover Provider', () => {
 		// Line 5: const notCached = '~aphex/test/not-in-manifest'
 		const hovers = await getHoverAt(5, 25)
 
-		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
-		const text = getHoverText(hovers[0])
+		const hover = hovers?.[0]
+		assert.ok(hover, 'Should return a hover')
+		const text = getHoverText(hover)
 		assert.ok(text.includes('Not in cache'), "Should show 'Not in cache'")
 		assert.ok(text.includes('~aphex/test/not-in-manifest'), 'Should show the URL')
 	})
@@ -76,8 +72,9 @@ suite('Aphex Hover Provider', () => {
 		// Line 4: const missingFile = '~aphex/test/missing-file'
 		const hovers = await getHoverAt(4, 28)
 
-		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
-		const text = getHoverText(hovers[0])
+		const hover = hovers?.[0]
+		assert.ok(hover, 'Should return a hover')
+		const text = getHoverText(hover)
 		assert.ok(text.includes('Cache file missing'), "Should show 'Cache file missing'")
 	})
 
@@ -97,8 +94,9 @@ suite('Aphex Hover Provider', () => {
 		// Line 7: const inBrackets = ['~aphex/pets/tiny/portrait']
 		const hovers = await getHoverAt(7, 30)
 
-		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
-		const text = getHoverText(hovers[0])
+		const hover = hovers?.[0]
+		assert.ok(hover, 'Should return a hover')
+		const text = getHoverText(hover)
 		assert.ok(text.includes('<img'), 'Should contain an img tag')
 	})
 
@@ -106,8 +104,9 @@ suite('Aphex Hover Provider', () => {
 		// Line 10: const inParens = ('~aphex/pets/tiny/portrait')
 		const hovers = await getHoverAt(10, 25)
 
-		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
-		const text = getHoverText(hovers[0])
+		const hover = hovers?.[0]
+		assert.ok(hover, 'Should return a hover')
+		const text = getHoverText(hover)
 		assert.ok(text.includes('<img'), 'Should contain an img tag')
 	})
 
@@ -115,8 +114,9 @@ suite('Aphex Hover Provider', () => {
 		// Line 12: const withSpaces = '~aphex/projects/album with spaces/building'
 		const hovers = await getHoverAt(12, 30)
 
-		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
-		const text = getHoverText(hovers[0])
+		const hover = hovers?.[0]
+		assert.ok(hover, 'Should return a hover')
+		const text = getHoverText(hover)
 		assert.ok(text.includes('<img'), 'Should contain an img tag for path with spaces')
 	})
 
@@ -124,8 +124,9 @@ suite('Aphex Hover Provider', () => {
 		// Line 14: const withLeadingSpace = '   ~aphex/pets/tiny/portrait'
 		const hovers = await getHoverAt(14, 35)
 
-		assert.ok(hovers && hovers.length > 0, 'Should return a hover')
-		const text = getHoverText(hovers[0])
+		const hover = hovers?.[0]
+		assert.ok(hover, 'Should return a hover')
+		const text = getHoverText(hover)
 		assert.ok(text.includes('<img'), 'Should contain an img tag when quote is not adjacent')
 	})
 })
